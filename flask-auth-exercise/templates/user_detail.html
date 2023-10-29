@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}User Detail{% endblock %}
+{% block content %}
+    <h1>User Detail</h1>
+    <p>Username: {{ user.username }}</p>
+    <p>Email: {{ user.email }}</p>
+    <p>First Name: {{ user.first_name }}</p>
+    <p>Last Name: {{ user.last_name }}</p>
+    
+    <h2>Your Feedback</h2>
+    <ul>
+        {% for feedback in feedbacks %}
+            <li>
+                {{ feedback.title }} - {{ feedback.content }}
+                <a href="{{ url_for('update_feedback', feedback_id=feedback.id) }}">Edit</a>
+                <form action="{{ url_for('delete_feedback', feedback_id=feedback.id) }}" method="post">
+                    <button type="submit">Delete</button>
+                </form>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="{{ url_for('add_feedback', username=user.username) }}">Add More Feedback</a>
+    <form action="{{ url_for('delete_user', username=user.username) }}" method="post">
+        <button type="submit">Delete Account</button>
+    </form>
+{% endblock %}
